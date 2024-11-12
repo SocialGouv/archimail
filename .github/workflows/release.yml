@@ -37,7 +37,7 @@ jobs:
           echo "$CSC_LINK_RAW" > certmac.txt
           base64 --decode certmac.txt > $CSC_LINK
       - name: Archive certificates
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           if-no-files-found: error
           name: certificates
@@ -98,7 +98,7 @@ jobs:
           SENTRY_URL: ${{ secrets.SENTRY_URL }}
           CACHE_PROVIDER: localdb
       - name: Archive dist
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: compile-dist
           path: dist/
