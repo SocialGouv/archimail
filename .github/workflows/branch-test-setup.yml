@@ -23,7 +23,7 @@ jobs:
       next-version: ${{ steps.compile.outputs.next-version }}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Setup Node
@@ -61,7 +61,7 @@ jobs:
           SENTRY_URL: ${{ secrets.SENTRY_URL }}
           CACHE_PROVIDER: file
       - name: Archive dist
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: compile-dist
           path: dist/
@@ -85,7 +85,7 @@ jobs:
       # no signing env because we don't care for test bin
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Setup Node
@@ -100,14 +100,14 @@ jobs:
           yarn global add replace
           $(yarn global bin)/replace '"version": "${{ needs.compile.outputs.current-version }}"' '"version": "${{ needs.compile.outputs.next-version }}"' package.json
       - name: Download dist
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: compile-dist
           path: dist/
       - name: Build bin
         run: yarn electron-builder --x64 --${{ matrix.target}} ${{ matrix.bin-output }}
       - name: Archive bin
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: bin
           path: electron/dist/*/archifiltre-*
@@ -121,7 +121,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Import GPG key
@@ -143,7 +143,7 @@ jobs:
         env:
           TAG_VERSION: v${{ needs.compile.outputs.next-version }}
       - name: Downloads bin
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
 
       - name: Release tip tag for branch
         uses: pyTooling/Actions/releaser@r0
